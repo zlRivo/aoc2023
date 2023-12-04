@@ -1,10 +1,7 @@
-use std::cmp::min;
-
 pub(crate) fn main(input: &str) -> String {
     input.lines()
         .map(|line| {
             let (title, card) = line.split_once(':').unwrap();
-            let (winning_nums_str, card_nums_str) = card.split_once('|').unwrap();
             let sides = card.split('|').map(|part| {
                 part.trim().split_whitespace()
                     .map(|n| n.parse::<i32>().unwrap())
