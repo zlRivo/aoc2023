@@ -13,11 +13,17 @@ pub(crate) fn main(input: &str) -> String {
             
             sides[1].iter()
                 .filter(|n| sides[0].contains(n))
-                .zip(-1..)
-                .map(|(n, i)| 2_i32.pow(min(0, i)))
-                .count()
+                .enumerate()
+                .map(|(i, n)| {
+                    if i > 0 {
+                        2_i32.pow(i as u32 - 1)
+                    } else {
+                        1
+                    }
+                })
+                .sum::<i32>()
         })
-        .sum::<usize>()
+        .sum::<i32>()
         .to_string()
 }
 
