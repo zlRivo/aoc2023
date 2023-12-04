@@ -4,6 +4,8 @@ mod day02a;
 mod day02b;
 mod day03a;
 mod day03b;
+mod day04a;
+mod day04b;
 
 use aoc2023::read_file;
 use lazy_static::lazy_static;
