@@ -9,4 +9,6 @@ edition = "2021"
 name = "aoc2023"
 
 [dependencies]
+itertools = "0.12.0"
 lazy_static = "1.4.0"
+rayon = "1.8.0"

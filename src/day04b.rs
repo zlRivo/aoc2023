@@ -1,7 +1,7 @@
 pub(crate) fn main(input: &str) -> String {
     let mut cards_amount = input.lines()
         .map(|line| {
-            let (title, card) = line.split_once(':').unwrap();
+            let (_title, card) = line.split_once(':').unwrap();
             let sides = card.split('|').map(|part| {
                 part.trim().split_whitespace()
                     .map(|n| n.parse::<i32>().unwrap())
@@ -35,6 +35,6 @@ mod tests {
 
     #[test]
     fn day04b_test() {
-        assert_eq!(super::main(&read_file!("./inputs/day04b_test.txt")), "".to_string());
+        assert_eq!(super::main(&read_file!("./inputs/day04b_test.txt")), "30".to_string());
     }
 }

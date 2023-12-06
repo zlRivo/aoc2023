@@ -1,4 +1,3 @@
-use std::collections::HashSet;
 use std::collections::HashMap;
 
 fn digit_count(n: i32) -> i32 {
