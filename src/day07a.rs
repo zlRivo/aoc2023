@@ -3,7 +3,7 @@ use std::cmp::Ordering;
 
 const HAND_SIZE: i64 = 5;
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Debug)]
 struct Hand(String, i64);
 
 enum HandType {
@@ -52,8 +52,8 @@ impl Hand {
 
 impl PartialOrd for Hand {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        if self.0.len().try_into().unwrap() != HAND_SIZE
-            || other.0.len().try_into().unwrap() != HAND_SIZE {
+        if self.0.len() != HAND_SIZE as usize
+            || other.0.len() != HAND_SIZE as usize {
             return None;
         }
 
@@ -62,8 +62,15 @@ impl PartialOrd for Hand {
 
         return match (type_a as i64).cmp(&(type_b as i64)) {
             Ordering::Equal => {
-                self.0.chars().chain(other.0.chars())
-                    .map(|(ca, cb)| get_card_strength(ca).cmp(&get_card_strength(cb)))
+                // Start looking at cards strength if hands are of the same type
+                self.0.chars().zip(other.0.chars())
+                    .find_map(|(ca, cb)| {
+                        let ord = get_card_strength(ca).cmp(&get_card_strength(cb));
+                        match ord {
+                            Ordering::Equal => None,
+                            _ => Some(ord)
+                        }
+                    })
             },
             val => Some(val)
         }
@@ -78,14 +85,17 @@ fn get_card_strength(card: char) -> i64 {
 }
 
 pub(crate) fn main(input: &str) -> String {
-    let hands = input.lines().map(|l| {
+    let mut hands = input.lines().map(|l| {
         let (hand, bid) = l.split_once(' ').unwrap();
         Hand(hand.to_string(), bid.parse::<i64>().unwrap())
     }).collect::<Vec<Hand>>();
 
-    // println!("{:?}", hands);
+    hands.sort_by(|h1, h2| h1.partial_cmp(&h2).unwrap());
 
-    todo!()
+    hands.iter().zip(1..)
+        .map(|(h, rank)| h.1 * rank)
+        .sum::<i64>()
+        .to_string()
 }
 
 #[cfg(test)]
