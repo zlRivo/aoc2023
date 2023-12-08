@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use aoc2023::utils::lcm;
+
 #[derive(Debug)]
 enum Direction { Left, Right }
 
@@ -19,25 +21,26 @@ pub(crate) fn main(input: &str) -> String {
         nodes.insert(node, (node_left, node_right));
     });
 
-    // Find step count
-    let mut step_count = 0;
-    let mut iterator = directions.iter().cycle();
+    // Get starting nodes
+    let iterator = directions.iter().cycle();
     let mut keys: Vec<&&str> = nodes.keys().filter(|k| k.ends_with('A')).collect();
-    while !keys.iter().all(|k| k.ends_with('Z')) {
-        let direction = iterator.next().unwrap();
-        for key in keys.iter_mut() {
-            *key = match direction {
-                Direction::Left => &mut &nodes[*key].0,
-                Direction::Right => &mut &nodes[*key].1
-            }
-        }
-        step_count += 1;
-        // if step_count < 1000 {
-        //     println!("{}, key[0] = {}", step_count, keys[0]);
-        // }
-    }
 
-    step_count.to_string()
+    // Count number of steps for each starting node
+    let steps: Vec<i64> = keys.iter_mut().map(|key| {
+        let mut step_count = 0;
+        let mut iterator = iterator.clone();
+        while !key.ends_with('Z') {
+            *key = match iterator.next().unwrap() {
+                Direction::Left => &nodes[*key].0,
+                Direction::Right => &nodes[*key].1
+            };
+            step_count += 1;
+        }
+        step_count
+    }).collect::<Vec<i64>>();
+
+    // Calculate the LCM between all of them
+    steps.iter().fold(1, |acc, n| lcm(acc, *n)).to_string()
 }
 
 #[cfg(test)]

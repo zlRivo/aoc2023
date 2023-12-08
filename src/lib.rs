@@ -1,3 +1,5 @@
+pub mod utils;
+
 #[macro_export]
 macro_rules! read_file {
     ($str: expr) => {
