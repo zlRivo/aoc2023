@@ -14,6 +14,10 @@ mod day07a;
 mod day07b;
 mod day08a;
 mod day08b;
+mod day09a;
+mod day09b;
+mod day10a;
+mod day10b;
 
 use aoc2023::read_file;
 use lazy_static::lazy_static;
@@ -37,11 +41,15 @@ lazy_static! {
         Job { name: "Day 5a", job: crate::day05a::main, input: read_file!("./inputs/day05.txt") },
         // Job { name: "Day 5b", job: crate::day05b::main, input: read_file!("./inputs/day05.txt") },
         Job { name: "Day 6a", job: crate::day06a::main, input: read_file!("./inputs/day06.txt") },
-        Job { name: "Day 6b", job: crate::day06b::main, input: read_file!("./inputs/day06.txt") },
+        // Job { name: "Day 6b", job: crate::day06b::main, input: read_file!("./inputs/day06.txt") },
         Job { name: "Day 7a", job: crate::day07a::main, input: read_file!("./inputs/day07.txt") },
         Job { name: "Day 7b", job: crate::day07b::main, input: read_file!("./inputs/day07.txt") },
         Job { name: "Day 8a", job: crate::day08a::main, input: read_file!("./inputs/day08.txt") },
         Job { name: "Day 8b", job: crate::day08b::main, input: read_file!("./inputs/day08.txt") },
+        Job { name: "Day 9a", job: crate::day09a::main, input: read_file!("./inputs/day09.txt") },
+        Job { name: "Day 9b", job: crate::day09b::main, input: read_file!("./inputs/day09.txt") },
+        Job { name: "Day 10a", job: crate::day10a::main, input: read_file!("./inputs/day10.txt") },
+        Job { name: "Day 10b", job: crate::day10b::main, input: read_file!("./inputs/day10b_test.txt") },
     ]);
 }
 
