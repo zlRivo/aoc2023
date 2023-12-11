@@ -24,7 +24,7 @@ fn get_neighbors(map: &Vec<Vec<char>>, pos: Position) -> Vec<Position> {
 
 pub(crate) fn main(input: &str) -> String {
     let mut map: Vec<Vec<char>> = input.lines().map(|l| l.chars().collect()).collect();
-    let mut galaxies: HashSet<(usize, usize)> = HashSet::new();
+    let mut galaxies: HashSet<Position> = HashSet::new();
 
     // Horizonzal expansion and galaxies locations
     let mut y = 0;
@@ -67,17 +67,50 @@ pub(crate) fn main(input: &str) -> String {
         x += 1;
     }
 
+    // Store iterated galaxies to prevent doubles
+    let mut iterated_galaxies: HashSet<Position> = HashSet::new();
+    let mut total_sum = 0;
+
     for (start_y, start_x) in galaxies.iter() {
-        let mut visited: HashSet<(usize, usize)> = HashSet::new();
-        let mut to_visit: VecDeque<(usize, usize)> = VecDeque::new();
+        // Find galaxies using breadth first search
+        // let mut found_galaxy = false; // If we found a galaxy (we should stop iterating at this level)
+        let mut found_galaxies: Vec<(usize, Position)> = vec![];
+        let mut visited: HashSet<Position> = HashSet::new();
+        let mut to_visit: VecDeque<(usize, Position)> = VecDeque::new();
+
+        to_visit.push_back((0, (*start_y, *start_x)));
+        while !to_visit.is_empty() {
+            let (steps, pos) = to_visit.pop_front().unwrap();
+
+            // Check if already visited
+            if visited.contains(&pos) {
+                continue;
+            }
+
+            if map[pos.0][pos.1] == '#' {
+                found_galaxies.push((steps, pos))
+            }
+
+            for nei in get_neighbors(&map, pos) {
+                to_visit.push_back((steps + 1, nei));
+            }
+
+            visited.insert(pos);
+        }
+
+        total_sum += found_galaxies.iter().filter_map(|(steps, pos)| {
+            (!iterated_galaxies.contains(pos)).then(|| steps)
+        }).sum::<usize>();
+
+        iterated_galaxies.insert((*start_y, *start_x));
     }
 
-    for l in map {
-        let s: String = l.iter().collect();
-        println!("{}", s);
-    }
+    // for l in map {
+    //     let s: String = l.iter().collect();
+    //     println!("{}", s);
+    // }
 
-    todo!()
+    total_sum.to_string()
 }
 
 #[cfg(test)]
@@ -86,6 +119,6 @@ mod tests {
 
     #[test]
     fn day11a_test() {
-        assert_eq!(super::main(&read_file!("./inputs/day11a_test.txt")), "".to_string());
+        assert_eq!(super::main(&read_file!("./inputs/day11a_test.txt")), "374".to_string());
     }
 }
