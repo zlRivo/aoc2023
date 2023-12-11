@@ -18,6 +18,8 @@ mod day09a;
 mod day09b;
 mod day10a;
 mod day10b;
+mod day11a;
+mod day11b;
 
 use aoc2023::read_file;
 use lazy_static::lazy_static;
@@ -49,9 +51,26 @@ lazy_static! {
         Job { name: "Day 9a", job: crate::day09a::main, input: read_file!("./inputs/day09.txt") },
         Job { name: "Day 9b", job: crate::day09b::main, input: read_file!("./inputs/day09.txt") },
         Job { name: "Day 10a", job: crate::day10a::main, input: read_file!("./inputs/day10.txt") },
-        Job { name: "Day 10b", job: crate::day10b::main, input: read_file!("./inputs/day10b_test.txt") },
+        // Job { name: "Day 10b", job: crate::day10b::main, input: read_file!("./inputs/day10b_test.txt") },
+        Job { name: "Day 11a", job: crate::day11a::main, input: read_file!("./inputs/day11a_test.txt") },
+        Job { name: "Day 11b", job: crate::day11b::main, input: read_file!("./inputs/day11a_test.txt") },
     ]);
 }
+
+/*
+...#......
+.......#..
+#.........
+..........
+..........
+......#...
+.#........
+.........#
+..........
+..........
+.......#..
+#...#.....
+*/
 
 fn main() {
     for j in JOBS.iter() {

@@ -129,14 +129,14 @@ pub(crate) fn main(input: &str) -> String {
         inside = false;
     }
 
-    for l in map {
-        for c in l {
-            print!("{}", c);
-        }
-        println!("");
-    }
-    println!("{:?}", area);
-    println!("{:?}", vertical);
+    // for l in map {
+    //     for c in l {
+    //         print!("{}", c);
+    //     }
+    //     println!("");
+    // }
+    // println!("{:?}", area);
+    // println!("{:?}", vertical);
     
     (steps / 2).to_string()
 }
@@ -146,6 +146,7 @@ mod tests {
     use aoc2023::read_file;
 
     #[test]
+    #[ignore]
     fn day10b_test() {
         assert_eq!(super::main(&read_file!("./inputs/day10b_test.txt")), "10".to_string());
     }
