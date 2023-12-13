@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-fn count_possible<'a>(s: &'a str, nums: Vec<i64>, mut cache: &mut HashMap<(&'a str, &[i64]), i64>) -> i64 {
+fn count_possible<'a>(s: &'a str, nums: Vec<i64>, mut cache: &mut HashMap<(&'a str, Vec<i64>), i64>) -> i64 {
     if s == "" {
         return if nums.is_empty() { 1 } else { 0 };
     }
@@ -9,7 +9,7 @@ fn count_possible<'a>(s: &'a str, nums: Vec<i64>, mut cache: &mut HashMap<(&'a s
         return if s.contains('#') { 0 } else { 1 };
     }
 
-    if let Some(result) = cache.get(&(s, nums.as_slice())) {
+    if let Some(result) = cache.get(&(s, nums.clone())) {
         return *result;
     }
 
@@ -34,7 +34,7 @@ fn count_possible<'a>(s: &'a str, nums: Vec<i64>, mut cache: &mut HashMap<(&'a s
     }
 
     // Memoization
-    cache.insert((s, nums.as_slice()), result);
+    cache.insert((s, nums.clone()), result);
 
     result
 }
@@ -55,9 +55,7 @@ pub(crate) fn main(input: &str) -> String {
         }
         new_row.pop();
 
-        println!("{:?}", new_nums);
-
-        let mut cache: HashMap<(&str, &[i64]), i64> = HashMap::new();
+        let mut cache: HashMap<(&str, Vec<i64>), i64> = HashMap::new();
 
         count_possible(&new_row, new_nums, &mut cache)
     }).sum::<i64>().to_string()
@@ -69,6 +67,6 @@ mod tests {
 
     #[test]
     fn day12b_test() {
-        assert_eq!(super::main(&read_file!("./inputs/day12b_test.txt")), "".to_string());
+        assert_eq!(super::main(&read_file!("./inputs/day12b_test.txt")), "525152".to_string());
     }
 }
