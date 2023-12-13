@@ -1,48 +1,38 @@
 use std::collections::HashSet;
 
+fn count_possible(s: &str, nums: Vec<i64>) -> i64 {
+    if s == "" {
+        return if nums.is_empty() { 1 } else { 0 };
+    }
+
+    if nums.is_empty() {
+        return if s == "" { 1 } else { 0 };
+    }
+
+    let mut result = 0;
+
+    if s.as_bytes()[0] == b'.' || s.as_bytes()[0] == b'?' {
+        result += count_possible(&s[1..], nums.clone());
+    }
+    
+    if s.as_bytes()[0] == b'#' || s.as_bytes()[0] == b'?' {
+        let n = *nums.first().unwrap() as usize;
+        if n <= s.len() && !&s[..n].contains('.') && s.as_bytes()[n] != b'#' {
+            result += count_possible(&s[(n + 1)..], nums[1..
+        }
+        result += count_possible(&s[1..], nums.clone());
+    }
+
+    result
+}
+
 pub(crate) fn main(input: &str) -> String {
     input.lines().map(|l| {
         let (row, nums_str) = l.split_once(' ').unwrap();
         let nums: Vec<i64> = nums_str.split(',').map(|n| n.parse::<i64>().unwrap()).collect();
-
-        // Find unknowns
-        let mut unknowns: HashSet<usize> = HashSet::new();
-        for (i, c) in row.chars().enumerate() {
-            if c == '#' {
-                unknowns.insert(i);
-            }
-        }
-
-        let row = row.replace("?", ".");
-
-        let mut chars: Vec<char> = row.chars().collect();
-        let mut consecutive_springs = 0;
-
-        for u in unknowns.iter() {
-            for i in 0..row.len() {
-                // if u == i {
-
-                // }
-
-                match chars[i] {
-                    '#' => { consecutive_springs += 1; },
-                    _ => {
-
-                    },
-                }
-            }
-        }
-
-        0
+        count_possible(row, nums)
     }).sum::<i64>().to_string()
 }
-
-// Solutions:
-// Brute force (find all possibilities of ?)
-
-// Parcourir la chaine du début à la fin
-// Si inconnu mettre l'état du ressort à vrai
-// Si le nombre de ressorts consécutifs dépasse le numéro de la liste après avoir modifié l'état
 
 #[cfg(test)]
 mod tests {
