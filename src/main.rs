@@ -65,7 +65,7 @@ lazy_static! {
         // Job { name: "Day 13a", job: crate::day13a::main, input: read_file!("./inputs/day13.txt") },
         // Job { name: "Day 13b", job: crate::day13b::main, input: read_file!("./inputs/day13.txt") },
         Job { name: "Day 14a", job: crate::day14a::main, input: read_file!("./inputs/day14.txt") },
-        Job { name: "Day 14b", job: crate::day14b::main, input: read_file!("./inputs/day14.txt") },
+        // Job { name: "Day 14b", job: crate::day14b::main, input: read_file!("./inputs/day14.txt") },
     ]);
 }
 
