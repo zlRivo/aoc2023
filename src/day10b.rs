@@ -112,13 +112,6 @@ pub(crate) fn main(input: &str) -> String {
             }
         }
     }
-
-    for l in map {
-        for c in l {
-            print!("{}", c);
-        }
-        println!("");
-    }
     
     area.to_string()
 }

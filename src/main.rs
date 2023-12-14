@@ -24,6 +24,8 @@ mod day12a;
 mod day12b;
 mod day13a;
 mod day13b;
+mod day14a;
+mod day14b;
 
 use aoc2023::read_file;
 use lazy_static::lazy_static;
@@ -62,6 +64,8 @@ lazy_static! {
         // Job { name: "Day 12b", job: crate::day12b::main, input: read_file!("./inputs/day12.txt") },
         // Job { name: "Day 13a", job: crate::day13a::main, input: read_file!("./inputs/day13.txt") },
         // Job { name: "Day 13b", job: crate::day13b::main, input: read_file!("./inputs/day13.txt") },
+        Job { name: "Day 14a", job: crate::day14a::main, input: read_file!("./inputs/day14.txt") },
+        Job { name: "Day 14b", job: crate::day14b::main, input: read_file!("./inputs/day14.txt") },
     ]);
 }
 
