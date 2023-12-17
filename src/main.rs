@@ -26,6 +26,12 @@ mod day13a;
 mod day13b;
 mod day14a;
 mod day14b;
+mod day15a;
+mod day15b;
+mod day16a;
+mod day16b;
+mod day17a;
+mod day17b;
 
 use aoc2023::read_file;
 use lazy_static::lazy_static;
@@ -66,23 +72,14 @@ lazy_static! {
         // Job { name: "Day 13b", job: crate::day13b::main, input: read_file!("./inputs/day13.txt") },
         Job { name: "Day 14a", job: crate::day14a::main, input: read_file!("./inputs/day14.txt") },
         // Job { name: "Day 14b", job: crate::day14b::main, input: read_file!("./inputs/day14.txt") },
+        Job { name: "Day 15a", job: crate::day15a::main, input: read_file!("./inputs/day15.txt") },
+        Job { name: "Day 15b", job: crate::day15b::main, input: read_file!("./inputs/day15.txt") },
+        // Job { name: "Day 16a", job: crate::day16a::main, input: read_file!("./inputs/day16.txt") },
+        // Job { name: "Day 16b", job: crate::day16b::main, input: read_file!("./inputs/day16.txt") },
+        Job { name: "Day 17a", job: crate::day17a::main, input: read_file!("./inputs/day17.txt") },
+        Job { name: "Day 17b", job: crate::day17b::main, input: read_file!("./inputs/day17.txt") },
     ]);
 }
-
-/*
-...#......
-.......#..
-#.........
-..........
-..........
-......#...
-.#........
-.........#
-..........
-..........
-.......#..
-#...#.....
-*/
 
 fn main() {
     for j in JOBS.iter() {
