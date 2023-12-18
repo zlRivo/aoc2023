@@ -2,6 +2,15 @@ use std::collections::HashSet;
 
 type Position = (i64, i64);
 
+fn get_offsets(grid: &HashSet<Position>, pos: Position) -> Vec<Position> {
+    [(-1, 0), (1, 0), (0, -1), (0, 1)].iter().filter_map(|(oy, ox)| {
+        let y = pos.0 + *oy;
+        let x = pos.1 + *ox;
+
+        grid.contains(&(y, x)).then_some((*oy, *ox))
+    }).collect::<Vec<Position>>()
+}
+
 pub(crate) fn main(input: &str) -> String {
     let mut visited: HashSet<Position> = HashSet::new();
     let mut pos = [0; 2];
@@ -36,27 +45,31 @@ pub(crate) fn main(input: &str) -> String {
         if pos.1 > x_max { x_max = pos.1; }
     }
 
-    println!("{}, {} - {}, {}", x_min, y_min, x_max, y_max);
+    // println!("{}, {} - {}, {}", x_min, y_min, x_max, y_max);
 
     // Raycast to find inside tiles
-    let mut prev_inside = false;
-    let mut inside = false;
+    let mut crossings = 0;
     let mut inside_tiles = 0;
     for y in y_min..=y_max {
         for x in x_min..=x_max {
-            if visited.contains(&(y, x)) && !prev_inside {
-                inside = !inside;
-            } else {
-                if inside {
-                    inside_tiles += 1;
+            if visited.contains(&(y, x)) {
+                let offsets = get_offsets(&visited, (y, x));
+                if (offsets.contains(&(-1, 0)) && !offsets.contains(&(1, 0)) // Contains top side but not bottom
+                    && (offsets.contains(&(0, -1)) && !offsets.contains(&(0, 1)) // Left side
+                    || offsets.contains(&(0, 1)) && !offsets.contains(&(0, -1)))) // Right side
+                    || !offsets.contains(&(0, -1)) && !offsets.contains(&(0, 1)) // Vertical crossing
+                {
+                    crossings += 1;
                 }
+            } else {
+                if crossings % 2 == 1 {
+                    inside_tiles += 1;
+                }            
             }
-
-            prev_inside = inside;
         }
     }
 
-    todo!()
+    (visited.len() + inside_tiles).to_string()
 }
 
 #[cfg(test)]
